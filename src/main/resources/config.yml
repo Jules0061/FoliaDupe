@@ -1,0 +1,164 @@
+# ============================================================
+#  FoliaDupe  |  config.yml
+#  Paper / Folia 1.21.11+   |   Java 21
+#
+#  Every value here is validated and cached at startup and on
+#  /dupe reload. Lookups use O(1) HashSet / EnumSet structures.
+# ============================================================
+
+# Maximum number of times a single /dupe command may duplicate the
+# held item. Keep this sane on large servers — very high numbers
+# create many ItemStacks in one tick. 10 is recommended.
+max-dupe-amount: 10
+
+settings:
+  # Amount used when /dupe is run without a number.
+  default-amount: 1
+  # Drop items on the ground when the player's inventory is full
+  # (false silently discards the overflow instead).
+  drop-overflow: true
+  # Cancel crafting recipes that use an item carrying this plugin's
+  # "blacklisted" tag. Extra anti-dupe protection; off by default.
+  protect-blacklisted-in-crafting: false
+  # Reserved hook for anonymous bStats metrics (no-op until wired).
+  metrics: false
+
+# ------------------------------------------------------------
+#  WorldGuard integration (optional; ignored when WorldGuard is
+#  not installed).
+# ------------------------------------------------------------
+worldguard:
+  # When true, overflow items are NOT dropped on the ground while
+  # the player stands inside a WorldGuard region listed below — the
+  # overflow is silently discarded instead. Prevents item spam /
+  # lag traps in protected areas (spawn, shops, etc.).
+  disable-overflow-in-regions: true
+  # Region IDs (case-insensitive) where overflow drops are disabled.
+  # Leave the list empty to apply to ALL regions.
+  regions:
+    - spawn
+    - shop
+
+# ------------------------------------------------------------
+#  Permission nodes (fully configurable). These are also declared
+#  in plugin.yml with sensible defaults.
+# ------------------------------------------------------------
+permissions:
+  dupe: foliadupe.dupe
+  blacklist: foliadupe.blacklist
+  reload: foliadupe.reload
+  version: foliadupe.version
+
+# ------------------------------------------------------------
+#  Material blacklist  (parsed into an EnumSet at startup, O(1)).
+#  Invalid names are skipped and reported in the console.
+# ------------------------------------------------------------
+blacklisted-materials:
+  - command_block
+  - chain_command_block
+  - repeating_command_block
+  - command_block_minecart
+  - bedrock
+  - barrier
+  - light
+  - structure_block
+  - jigsaw
+  - debug_stick
+  - mace
+  - wind_charge
+  - breeze_rod
+  - heavy_core
+  - trial_key
+  - ominous_trial_key
+  - ominous_bottle
+  - crafter
+  - sculk_shrieker
+  - sculk_sensor
+  - player_head
+  - dragon_egg
+  - repeater
+  - end_portal_frame
+  - dragon_head
+  - vault
+  - comparator
+  - bundle
+  - white_bundle
+  - orange_bundle
+  - magenta_bundle
+  - light_blue_bundle
+  - yellow_bundle
+  - lime_bundle
+  - pink_bundle
+  - gray_bundle
+  - light_gray_bundle
+  - cyan_bundle
+  - purple_bundle
+  - blue_bundle
+  - brown_bundle
+  - green_bundle
+  - red_bundle
+  - black_bundle
+
+# ------------------------------------------------------------
+#  Illegal / non-vanilla enchantment protection.
+#
+#  When enabled, any item carrying an enchantment that cannot exist
+#  in vanilla survival is automatically blocked from duplication:
+#    - levels above the vanilla maximum (e.g. Sharpness VI+)
+#    - levels below the vanilla minimum (e.g. level 0 / negative)
+#    - enchantments from custom plugin namespaces (non "minecraft:")
+#  Applies to both applied enchants and stored enchants on books.
+# ------------------------------------------------------------
+block-illegal-enchants: true
+
+# ------------------------------------------------------------
+#  Spawn egg protection.
+#
+#  When enabled, every spawn egg (zombie, creeper, villager, ...)
+#  is blocked from duplication. The regular chicken egg (the
+#  throwable one obtainable in vanilla survival) is NOT a spawn
+#  egg and stays dupeable.
+# ------------------------------------------------------------
+block-spawn-eggs: true
+
+# ------------------------------------------------------------
+#  NBT / component keyword blacklist  (parsed into a HashSet, O(1)
+#  membership). Each keyword is matched, case-insensitively, against
+#  a single text snapshot of the item built once per check
+#  (name + lore + enchantments + PDC keys + custom model data).
+# ------------------------------------------------------------
+blacklisted-nbt-keywords:
+  - heart
+  - undupeable
+  - lifesteal
+  - minecraft:breach
+  - excellentcrates
+  - cobaxe
+# ------------------------------------------------------------
+#  Dedicated LifeSteal / heart-item protection.
+#
+#  Blocks duplication of any item whose name, lore, enchantments,
+#  PersistentDataContainer keys, plugin namespace or custom model
+#  data match the entries below. Covers LifeStealZ, soulbound
+#  hearts, revive items and custom LifeSteal plugin items.
+# ------------------------------------------------------------
+lifesteal-protection:
+  enabled: true
+  keywords:
+    - lifesteal
+    - life steal
+    - heart
+    - hearts
+    - extra heart
+    - extra hearts
+    - soulbound
+    - soul bound
+    - revive
+    - reviver
+  # PDC namespaces that mark an item as protected
+  # (matched against keys such as "lifestealz:id").
+  block-namespaces:
+    - lifesteal
+    - lifestealz
+    - lifestealsmp
+    - hearts

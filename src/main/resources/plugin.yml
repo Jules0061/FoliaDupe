@@ -1,0 +1,38 @@
+name: FoliaDupe
+version: '${project.version}'
+description: dupe plugin for clonedupe
+author: Jules
+website: https://github.com/Jules0061/
+
+main: com.Jules.foliaDupe.FoliaDupe
+api-version: '1.21'
+folia-supported: true
+load: POSTWORLD
+softdepend: [WorldGuard]
+
+commands:
+  dupe:
+    description: Duplicate the item held in your main hand.
+    usage: /dupe [amount|reload|version]
+    aliases: [d]
+  blacklist:
+    description: Toggle the blacklist tag on the held item.
+    usage: /blacklist
+  dupeplugin:
+    description: FoliaDupe administration command.
+    usage: /dupeplugin <reload|version>
+    aliases: [foliadupe, fdupe]
+
+permissions:
+  foliadupe.dupe:
+    description: Allows using /dupe to duplicate items.
+    default: true
+  foliadupe.blacklist:
+    description: Allows toggling the blacklist tag with /blacklist.
+    default: op
+  foliadupe.reload:
+    description: Allows reloading the FoliaDupe configuration.
+    default: op
+  foliadupe.version:
+    description: Allows viewing the FoliaDupe version.
+    default: true

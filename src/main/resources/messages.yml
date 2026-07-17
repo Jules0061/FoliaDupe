@@ -1,0 +1,40 @@
+# ============================================================
+#  FoliaDupe  |  messages.yml
+#
+#  All messages use the Adventure MiniMessage format:
+#  https://docs.advntr.dev/minimessage/format.html
+#
+#  Set any message to "none" (or leave it blank) to silence it.
+#  Available placeholders are listed above each message.
+# ============================================================
+
+# Prepended to every message below. Include a trailing space.
+prefix: "<gradient:#3A8BFF:#1E5FD8><bold>DUPE</bold></gradient> <dark_gray>»</dark_gray> "
+
+# Placeholders: <item> (item name), <amount> (times duplicated)
+dupe-success: "<gray>You duplicated <white><item></white> <green><amount></green> <gray>time(s)!"
+
+# Sent when trying to duplicate air.
+air: "<red>You can't duplicate air!"
+
+# Sent when the held item is blacklisted (material, NBT, lifesteal or tag).
+blacklisted: "<red>This item is blacklisted and cannot be duplicated!"
+
+# Sent when the held container (shulker box or bundle) holds a blacklisted item.
+container-blacklisted: "<red>This container holds a blacklisted item and cannot be duplicated!"
+
+# Sent by /blacklist when tagging / untagging the held item.
+item-blacklisted: "<gray>This item is now <red>blacklisted<gray>!"
+item-unblacklisted: "<gray>This item is no longer <red>blacklisted<gray>!"
+
+# Validation / permission feedback.
+invalid-amount: "<red>Please provide a valid, positive amount."
+no-permission: "<red>You don't have permission to do that."
+player-only: "<red>Only players can use this command."
+
+# Admin feedback. Placeholders: <materials>, <keywords>
+reload-success: "<green>Configuration reloaded <gray>(<white><materials></white> materials, <white><keywords></white> keywords)."
+reload-failed: "<red>Reload failed — check the console for details."
+
+# Placeholder: <version>
+version: "<gray>Running <white>FoliaDupe v<version></white>."
