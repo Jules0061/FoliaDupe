@@ -7,6 +7,9 @@ import com.Jules.foliaDupe.config.ConfigManager;
 import com.Jules.foliaDupe.config.Settings;
 import com.Jules.foliaDupe.dupe.DuplicationManager;
 import com.Jules.foliaDupe.message.MessageManager;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -88,8 +91,21 @@ public final class DupeCommand implements CommandExecutor, TabCompleter {
 
         if (duplication.duplicate(player, hand, amount)) {
             messages.dupeSuccess(player, hand, amount);
+            playDupeSound(player, settings);
         }
         return true;
+    }
+
+    private static void playDupeSound(Player player, Settings settings) {
+        if (!settings.soundEnabled()) {
+            return;
+        }
+        final NamespacedKey key = NamespacedKey.minecraft(settings.soundName().toLowerCase(Locale.ROOT));
+        final Sound sound = Registry.SOUNDS.get(key);
+        if (sound == null) {
+            return;
+        }
+        player.playSound(player.getLocation(), sound, settings.soundVolume(), settings.soundPitch());
     }
 
     private static Integer parsePositive(String input) {

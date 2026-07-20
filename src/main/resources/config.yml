@@ -22,11 +22,42 @@ settings:
   protect-blacklisted-in-crafting: false
   # Reserved hook for anonymous bStats metrics (no-op until wired).
   metrics: false
-
-# ------------------------------------------------------------
-#  WorldGuard integration (optional; ignored when WorldGuard is
-#  not installed).
-# ------------------------------------------------------------
+  # ------------------------------------------------------------
+  #  Illegal / non-vanilla enchantment protection.
+  #
+  #  When enabled, any item carrying an enchantment that cannot exist
+  #  in vanilla survival is automatically blocked from duplication:
+  #    - levels above the vanilla maximum (e.g. Sharpness VI+)
+  #    - levels below the vanilla minimum (e.g. level 0 / negative)
+  #    - enchantments from custom plugin namespaces (non "minecraft:")
+  #  Applies to both applied enchants and stored enchants on books.
+  # ------------------------------------------------------------
+  block-illegal-enchants: true
+  # ------------------------------------------------------------
+  #  Spawn egg protection.
+  #
+  #  When enabled, every spawn egg (zombie, creeper, villager, ...)
+  #  is blocked from duplication. The regular chicken egg (the
+  #  throwable one obtainable in vanilla survival) is NOT a spawn
+  #  egg and stays dupeable.
+  # ------------------------------------------------------------
+  block-spawn-eggs: true
+  # ------------------------------------------------------------
+  #  Sound played to the player on a successful /dupe.
+  # ------------------------------------------------------------
+sound:
+  # Enable/disable the sound effect on successful duplication.
+  enabled: true
+  # Minecraft sound key, e.g. entity.item.pickup (see
+  # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+  # for names; convert to lowercase dotted form).
+  name: entity.item.pickup
+  volume: 1.0
+  pitch: 1.0
+  # ------------------------------------------------------------
+  #  WorldGuard integration (optional; ignored when WorldGuard is
+  #  not installed).
+  # ------------------------------------------------------------
 worldguard:
   # When true, overflow items are NOT dropped on the ground while
   # the player stands inside a WorldGuard region listed below — the
@@ -37,22 +68,20 @@ worldguard:
   # Leave the list empty to apply to ALL regions.
   regions:
     - spawn
-    - shop
-
-# ------------------------------------------------------------
-#  Permission nodes (fully configurable). These are also declared
-#  in plugin.yml with sensible defaults.
-# ------------------------------------------------------------
+    - example1
+  # ------------------------------------------------------------
+  #  Permission nodes (fully configurable). These are also declared
+  #  in plugin.yml with sensible defaults.
+  # ------------------------------------------------------------
 permissions:
   dupe: foliadupe.dupe
   blacklist: foliadupe.blacklist
   reload: foliadupe.reload
   version: foliadupe.version
-
-# ------------------------------------------------------------
-#  Material blacklist  (parsed into an EnumSet at startup, O(1)).
-#  Invalid names are skipped and reported in the console.
-# ------------------------------------------------------------
+  # ------------------------------------------------------------
+  #  Material blacklist  (parsed into an EnumSet at startup, O(1)).
+  #  Invalid names are skipped and reported in the console.
+  # ------------------------------------------------------------
 blacklisted-materials:
   - command_block
   - chain_command_block
@@ -98,35 +127,12 @@ blacklisted-materials:
   - green_bundle
   - red_bundle
   - black_bundle
-
-# ------------------------------------------------------------
-#  Illegal / non-vanilla enchantment protection.
-#
-#  When enabled, any item carrying an enchantment that cannot exist
-#  in vanilla survival is automatically blocked from duplication:
-#    - levels above the vanilla maximum (e.g. Sharpness VI+)
-#    - levels below the vanilla minimum (e.g. level 0 / negative)
-#    - enchantments from custom plugin namespaces (non "minecraft:")
-#  Applies to both applied enchants and stored enchants on books.
-# ------------------------------------------------------------
-block-illegal-enchants: true
-
-# ------------------------------------------------------------
-#  Spawn egg protection.
-#
-#  When enabled, every spawn egg (zombie, creeper, villager, ...)
-#  is blocked from duplication. The regular chicken egg (the
-#  throwable one obtainable in vanilla survival) is NOT a spawn
-#  egg and stays dupeable.
-# ------------------------------------------------------------
-block-spawn-eggs: true
-
-# ------------------------------------------------------------
-#  NBT / component keyword blacklist  (parsed into a HashSet, O(1)
-#  membership). Each keyword is matched, case-insensitively, against
-#  a single text snapshot of the item built once per check
-#  (name + lore + enchantments + PDC keys + custom model data).
-# ------------------------------------------------------------
+  # ------------------------------------------------------------
+  #  NBT / component keyword blacklist  (parsed into a HashSet, O(1)
+  #  membership). Each keyword is matched, case-insensitively, against
+  #  a single text snapshot of the item built once per check
+  #  (name + lore + enchantments + PDC keys + custom model data).
+  # ------------------------------------------------------------
 blacklisted-nbt-keywords:
   - heart
   - undupeable
@@ -134,14 +140,14 @@ blacklisted-nbt-keywords:
   - minecraft:breach
   - excellentcrates
   - cobaxe
-# ------------------------------------------------------------
-#  Dedicated LifeSteal / heart-item protection.
-#
-#  Blocks duplication of any item whose name, lore, enchantments,
-#  PersistentDataContainer keys, plugin namespace or custom model
-#  data match the entries below. Covers LifeStealZ, soulbound
-#  hearts, revive items and custom LifeSteal plugin items.
-# ------------------------------------------------------------
+  # ------------------------------------------------------------
+  #  Dedicated LifeSteal / heart-item protection.
+  #
+  #  Blocks duplication of any item whose name, lore, enchantments,
+  #  PersistentDataContainer keys, plugin namespace or custom model
+  #  data match the entries below. Covers LifeStealZ, soulbound
+  #  hearts, revive items and custom LifeSteal plugin items.
+  # ------------------------------------------------------------
 lifesteal-protection:
   enabled: true
   keywords:
