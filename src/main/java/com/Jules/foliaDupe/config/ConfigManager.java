@@ -35,7 +35,8 @@ public final class ConfigManager {
                 config.getString("permissions.dupe", "foliadupe.dupe"),
                 config.getString("permissions.blacklist", "foliadupe.blacklist"),
                 config.getString("permissions.reload", "foliadupe.reload"),
-                config.getString("permissions.version", "foliadupe.version"));
+                config.getString("permissions.version", "foliadupe.version"),
+                config.getString("permissions.dupebans", "foliadupe.dupebans"));
 
         plugin.getSLF4JLogger().info("Loaded settings: max-dupe-amount={}, default-amount={}, drop-overflow={}.",
                 max, defaultAmount, settings.dropOverflow());

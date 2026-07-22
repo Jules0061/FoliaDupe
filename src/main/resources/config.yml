@@ -48,9 +48,7 @@ settings:
 sound:
   # Enable/disable the sound effect on successful duplication.
   enabled: true
-  # Minecraft sound key, e.g. entity.item.pickup (see
-  # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
-  # for names; convert to lowercase dotted form).
+  # Minecraft sound key in lowercase dotted form, e.g. entity.item.pickup
   name: entity.item.pickup
   volume: 1.0
   pitch: 1.0
@@ -78,6 +76,7 @@ permissions:
   blacklist: foliadupe.blacklist
   reload: foliadupe.reload
   version: foliadupe.version
+  dupebans: foliadupe.dupebans
   # ------------------------------------------------------------
   #  Material blacklist  (parsed into an EnumSet at startup, O(1)).
   #  Invalid names are skipped and reported in the console.

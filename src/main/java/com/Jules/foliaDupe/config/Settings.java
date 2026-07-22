@@ -17,7 +17,8 @@ public record Settings(
         String permDupe,
         String permBlacklist,
         String permReload,
-        String permVersion) {
+        String permVersion,
+        String permDupeBans) {
 
     public static Settings defaults() {
         return new Settings(
@@ -26,6 +27,7 @@ public record Settings(
                 "foliadupe.dupe",
                 "foliadupe.blacklist",
                 "foliadupe.reload",
-                "foliadupe.version");
+                "foliadupe.version",
+                "foliadupe.dupebans");
     }
 }

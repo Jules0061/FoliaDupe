@@ -3,9 +3,11 @@ package com.Jules.foliaDupe;
 import com.Jules.foliaDupe.blacklist.BlacklistManager;
 import com.Jules.foliaDupe.command.AdminCommand;
 import com.Jules.foliaDupe.command.BlacklistCommand;
+import com.Jules.foliaDupe.command.DupeBansCommand;
 import com.Jules.foliaDupe.command.DupeCommand;
 import com.Jules.foliaDupe.config.ConfigManager;
 import com.Jules.foliaDupe.dupe.DuplicationManager;
+import com.Jules.foliaDupe.gui.DupeBansListener;
 import com.Jules.foliaDupe.hook.WorldGuardHook;
 import com.Jules.foliaDupe.listener.CraftProtectionListener;
 import com.Jules.foliaDupe.message.MessageManager;
@@ -42,9 +44,11 @@ public final class FoliaDupe extends JavaPlugin {
                 blacklistManager, duplicationManager));
         registerCommand("blacklist", new BlacklistCommand(keys, configManager, messageManager));
         registerCommand("dupeplugin", new AdminCommand(this, configManager, messageManager));
+        registerCommand("dupebans", new DupeBansCommand(this, configManager, messageManager, blacklistManager));
 
         getServer().getPluginManager().registerEvents(
                 new CraftProtectionListener(blacklistManager, configManager), this);
+        getServer().getPluginManager().registerEvents(new DupeBansListener(), this);
 
         getSLF4JLogger().info("FoliaDupe v{} enabled in {} ms.",
                 getPluginMeta().getVersion(),

@@ -18,6 +18,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -190,6 +192,17 @@ public final class BlacklistManager {
 
     public int materialCount() {
         return snapshot.materials.size();
+    }
+
+    public List<Material> displayableMaterials() {
+        final List<Material> out = new ArrayList<>(snapshot.materials.size());
+        for (Material material : snapshot.materials) {
+            if (VanillaItems.isSurvivalObtainable(material)) {
+                out.add(material);
+            }
+        }
+        out.sort(Comparator.comparing(Material::name));
+        return out;
     }
 
     public int keywordCount() {

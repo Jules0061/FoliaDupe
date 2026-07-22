@@ -22,6 +22,10 @@ commands:
     description: FoliaDupe administration command.
     usage: /dupeplugin <reload|version>
     aliases: [foliadupe, fdupe]
+  dupebans:
+    description: Browse every blacklisted item in a paginated GUI.
+    usage: /dupebans
+    aliases: [dupeban, dupeblacklist]
 
 permissions:
   foliadupe.dupe:
@@ -35,4 +39,7 @@ permissions:
     default: op
   foliadupe.version:
     description: Allows viewing the FoliaDupe version.
+    default: true
+  foliadupe.dupebans:
+    description: Allows browsing the blacklisted item GUI with /dupebans.
     default: true

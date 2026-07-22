@@ -27,6 +27,13 @@ of the original *Dupe Skript v3.0* by MrT1_.
 | `/dupe version` | — | `foliadupe.version` (all) | Show the version. |
 | `/blacklist` | — | `foliadupe.blacklist` (op) | Toggle the blacklist tag on the held item. |
 | `/dupeplugin <reload\|version>` | `/foliadupe`, `/fdupe` | as above | Admin entry point. |
+| `/dupebans` | `/dupeban`, `/dupeblacklist` | `foliadupe.dupebans` (default: all) | Paginated GUI listing every blacklisted item. |
+
+`/dupebans` opens a 54-slot menu (45 items per page) with arrow navigation and a
+summary book. Only items obtainable in vanilla survival are listed — creative-only
+entries such as command blocks, spawn eggs, barriers, light blocks, the debug
+stick, structure blocks and jigsaws are filtered out of the display. They remain
+fully blacklisted; they are simply not rendered as icons.
 
 Permission nodes are configurable in `config.yml`.
 
@@ -64,11 +71,12 @@ The jar is produced at `target/FoliaDupe-1.0-ALPHA.jar`. Drop it into `plugins/`
 ```
 com.Jules.foliaDupe
 ├── FoliaDupe                 (main / wiring)
-├── command   (DupeCommand, BlacklistCommand, AdminCommand, AdminActions)
+├── command   (DupeCommand, BlacklistCommand, AdminCommand, AdminActions, DupeBansCommand)
 ├── config    (ConfigManager, Settings)
 ├── message   (MessageManager, Messages)
-├── blacklist (BlacklistManager, BlockReason)
+├── blacklist (BlacklistManager, BlockReason, VanillaItems)
 ├── dupe      (DuplicationManager)
+├── gui       (DupeBansMenu, DupeBansListener)
 ├── listener  (CraftProtectionListener)
 └── util      (Keys)
 ```

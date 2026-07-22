@@ -1,8 +1,7 @@
 # ============================================================
 #  FoliaDupe  |  messages.yml
 #
-#  All messages use the Adventure MiniMessage format:
-#  https://docs.advntr.dev/minimessage/format.html
+#  All messages use the Adventure MiniMessage format.
 #
 #  Set any message to "none" (or leave it blank) to silence it.
 #  Available placeholders are listed above each message.
@@ -38,3 +37,32 @@ reload-failed: "<red>Reload failed — check the console for details."
 
 # Placeholder: <version>
 version: "<gray>Running <white>FoliaDupe v<version></white>."
+
+# ============================================================
+#  /dupebans GUI.
+#
+#  Only items obtainable in vanilla survival are listed; purely
+#  creative-only entries (command blocks, spawn eggs, barriers,
+#  the debug stick, ...) are hidden from the menu.
+# ============================================================
+dupebans:
+  # Inventory title. Placeholders: <page>, <pages>
+  title: "<gradient:#3A8BFF:#1E5FD8><bold>Blacklisted Items</bold></gradient> <dark_gray>(<white><page></white>/<white><pages></white>)"
+  # Sent when nothing can be shown in the GUI.
+  empty: "<red>There are no blacklisted items to display."
+  # Navigation buttons. Placeholders: <page> (target page), <pages>
+  previous-page: "<yellow>« Previous Page <dark_gray>(<white><page></white>/<white><pages></white>)"
+  next-page: "<yellow>Next Page » <dark_gray>(<white><page></white>/<white><pages></white>)"
+  # Summary button in the centre of the bottom row.
+  info-name: "<white><bold>Blacklisted Items"
+  # Placeholders: <shown>, <hidden>, <keywords>
+  info-lore:
+    - "<gray>Listed items: <white><shown>"
+    - "<gray>Hidden (creative-only): <white><hidden>"
+    - "<gray>Blocked keywords: <white><keywords>"
+    - ""
+    - "<dark_gray>These items cannot be duplicated."
+  # Lore shown under every listed item. Placeholder: <material>
+  entry-lore:
+    - "<dark_gray><material>"
+    - "<red>Cannot be duplicated."
