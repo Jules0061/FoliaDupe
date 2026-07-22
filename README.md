@@ -29,11 +29,18 @@ of the original *Dupe Skript v3.0* by MrT1_.
 | `/dupeplugin <reload\|version>` | `/foliadupe`, `/fdupe` | as above | Admin entry point. |
 | `/dupebans` | `/dupeban`, `/dupeblacklist` | `foliadupe.dupebans` (default: all) | Paginated GUI listing every blacklisted item. |
 
-`/dupebans` opens a 54-slot menu (45 items per page) with arrow navigation and a
-summary book. Only items obtainable in vanilla survival are listed — creative-only
-entries such as command blocks, spawn eggs, barriers, light blocks, the debug
-stick, structure blocks and jigsaws are filtered out of the display. They remain
-fully blacklisted; they are simply not rendered as icons.
+`/dupebans` opens a 54-slot menu (45 items per page) with arrow navigation, a
+summary book and a **Creative-Only Items** toggle. By default only items
+obtainable in vanilla survival are listed — creative-only entries such as command
+blocks, spawn eggs, barriers, light blocks, the debug stick, structure blocks and
+jigsaws are filtered out of the display. They remain fully blacklisted either way;
+they are simply not rendered as icons.
+
+Clicking the toggle (green/gray dye, bottom row) appends those creative-only
+entries to the end of the list and repaginates. The toggle is **per player and
+per menu instance** — it lives on the open `DupeBansMenu`, so one player revealing
+them never affects anyone else, and it resets to hidden the next time the command
+is run.
 
 Permission nodes are configurable in `config.yml`.
 

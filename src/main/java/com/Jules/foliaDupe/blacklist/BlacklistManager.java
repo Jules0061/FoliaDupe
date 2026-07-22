@@ -195,9 +195,20 @@ public final class BlacklistManager {
     }
 
     public List<Material> displayableMaterials() {
+        return collect(true);
+    }
+
+    public List<Material> hiddenMaterials() {
+        return collect(false);
+    }
+
+    private List<Material> collect(boolean survivalObtainable) {
         final List<Material> out = new ArrayList<>(snapshot.materials.size());
         for (Material material : snapshot.materials) {
-            if (VanillaItems.isSurvivalObtainable(material)) {
+            if (!VanillaItems.isRenderable(material)) {
+                continue;
+            }
+            if (VanillaItems.isSurvivalObtainable(material) == survivalObtainable) {
                 out.add(material);
             }
         }

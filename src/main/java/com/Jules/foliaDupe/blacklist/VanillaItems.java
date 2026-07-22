@@ -39,12 +39,15 @@ public final class VanillaItems {
     private VanillaItems() {
     }
 
-    public static boolean isSurvivalObtainable(Material material) {
+    public static boolean isRenderable(Material material) {
         return material != null
                 && !material.isLegacy()
                 && material.isItem()
-                && !material.isAir()
-                && !EXCLUDED.contains(material);
+                && !material.isAir();
+    }
+
+    public static boolean isSurvivalObtainable(Material material) {
+        return isRenderable(material) && !EXCLUDED.contains(material);
     }
 
     private static Set<Material> buildExcluded() {

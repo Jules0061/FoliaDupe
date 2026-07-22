@@ -125,8 +125,21 @@ public final class MessageManager {
                 Placeholder.unparsed("keywords", Integer.toString(keywords)));
     }
 
-    public List<Component> bansEntryLore(String material) {
-        return iconLore(messages.bansEntryLore(), Placeholder.unparsed("material", material));
+    public List<Component> bansEntryLore(String material, boolean creativeOnly) {
+        final Messages m = messages;
+        final List<String> lines = creativeOnly ? m.bansEntryLoreHidden() : m.bansEntryLore();
+        return iconLore(lines, Placeholder.unparsed("material", material));
+    }
+
+    public Component bansToggleName() {
+        return icon(messages.bansToggleName());
+    }
+
+    public List<Component> bansToggleLore(boolean showingHidden, int hidden) {
+        final Messages m = messages;
+        return iconLore(m.bansToggleLore(),
+                Placeholder.parsed("state", showingHidden ? m.bansStateShown() : m.bansStateHidden()),
+                Placeholder.unparsed("hidden", Integer.toString(hidden)));
     }
 
     private static TagResolver[] pageResolvers(int page, int pages) {

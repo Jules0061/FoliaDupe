@@ -66,3 +66,19 @@ dupebans:
   entry-lore:
     - "<dark_gray><material>"
     - "<red>Cannot be duplicated."
+  # Lore used for creative-only items once "show hidden" is enabled.
+  entry-lore-hidden:
+    - "<dark_gray><material>"
+    - "<red>Cannot be duplicated."
+    - "<dark_purple>Creative-only item."
+  # Toggle button (bottom row) that reveals the creative-only entries.
+  # The toggle is per-player and resets when the menu is closed.
+  toggle-name: "<white><bold>Creative-Only Items"
+  # Placeholders: <state>, <hidden>
+  toggle-lore:
+    - "<gray>Currently: <state>"
+    - "<gray>Creative-only entries: <white><hidden>"
+    - ""
+    - "<yellow>Click to toggle."
+  state-shown: "<green>Shown"
+  state-hidden: "<red>Hidden"

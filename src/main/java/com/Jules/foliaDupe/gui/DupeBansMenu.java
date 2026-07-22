@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jspecify.annotations.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,31 +24,34 @@ public final class DupeBansMenu implements InventoryHolder {
     private static final int SIZE = 54;
     private static final int SLOT_PREVIOUS = 45;
     private static final int SLOT_INFO = 49;
+    private static final int SLOT_TOGGLE = 50;
     private static final int SLOT_NEXT = 53;
+
     private static final Material FILLER = Material.GRAY_STAINED_GLASS_PANE;
+    private static final Material TOGGLE_ON = Material.LIME_DYE;
+    private static final Material TOGGLE_OFF = Material.GRAY_DYE;
 
     private final FoliaDupe plugin;
     private final MessageManager messages;
-    private final List<Material> entries;
-    private final int hidden;
+    private final List<Material> survival;
+    private final List<Material> hidden;
     private final int keywords;
-    private final int pages;
 
+    private boolean showHidden;
     private int page;
     private Inventory inventory;
 
-    public DupeBansMenu(FoliaDupe plugin, MessageManager messages, List<Material> entries,
-                        int hidden, int keywords) {
+    public DupeBansMenu(FoliaDupe plugin, MessageManager messages, List<Material> survival,
+                        List<Material> hidden, int keywords) {
         this.plugin = plugin;
         this.messages = messages;
-        this.entries = entries;
+        this.survival = survival;
         this.hidden = hidden;
         this.keywords = keywords;
-        this.pages = Math.max(1, (entries.size() + PAGE_SIZE - 1) / PAGE_SIZE);
     }
 
     public void open(Player player) {
-        this.inventory = Bukkit.createInventory(this, SIZE, messages.bansTitle(page + 1, pages));
+        this.inventory = Bukkit.createInventory(this, SIZE, messages.bansTitle(page + 1, pages()));
         render();
         player.openInventory(inventory);
     }
@@ -58,6 +62,16 @@ public final class DupeBansMenu implements InventoryHolder {
     }
 
     public void handleClick(Player player, int slot) {
+        if (slot == SLOT_TOGGLE) {
+            if (hidden.isEmpty()) {
+                return;
+            }
+            this.showHidden = !showHidden;
+            this.page = Math.min(page, pages() - 1);
+            reopen(player);
+            return;
+        }
+
         final int target;
         if (slot == SLOT_PREVIOUS) {
             target = page - 1;
@@ -66,11 +80,30 @@ public final class DupeBansMenu implements InventoryHolder {
         } else {
             return;
         }
-        if (target < 0 || target >= pages) {
+        if (target < 0 || target >= pages()) {
             return;
         }
         this.page = target;
+        reopen(player);
+    }
+
+    private void reopen(Player player) {
         player.getScheduler().run(plugin, task -> open(player), null);
+    }
+
+    private List<Material> entries() {
+        if (!showHidden) {
+            return survival;
+        }
+        final List<Material> combined = new ArrayList<>(survival.size() + hidden.size());
+        combined.addAll(survival);
+        combined.addAll(hidden);
+        return combined;
+    }
+
+    private int pages() {
+        final int total = showHidden ? survival.size() + hidden.size() : survival.size();
+        return Math.max(1, (total + PAGE_SIZE - 1) / PAGE_SIZE);
     }
 
     private void render() {
@@ -79,17 +112,23 @@ public final class DupeBansMenu implements InventoryHolder {
             inventory.setItem(slot, filler);
         }
 
+        final List<Material> entries = entries();
+        final int pages = pages();
         final int start = page * PAGE_SIZE;
         final int end = Math.min(start + PAGE_SIZE, entries.size());
         for (int index = start; index < end; index++) {
             final Material material = entries.get(index);
+            final boolean creativeOnly = index >= survival.size();
             inventory.setItem(index - start,
                     build(material, Component.translatable(material.translationKey()),
-                            messages.bansEntryLore(material.name().toLowerCase(Locale.ROOT))));
+                            messages.bansEntryLore(material.name().toLowerCase(Locale.ROOT), creativeOnly)));
         }
 
         inventory.setItem(SLOT_INFO, build(Material.BOOK, messages.bansInfoName(),
-                messages.bansInfoLore(entries.size(), hidden, keywords)));
+                messages.bansInfoLore(survival.size(), hidden.size(), keywords)));
+
+        inventory.setItem(SLOT_TOGGLE, build(showHidden ? TOGGLE_ON : TOGGLE_OFF,
+                messages.bansToggleName(), messages.bansToggleLore(showHidden, hidden.size())));
 
         if (page > 0) {
             inventory.setItem(SLOT_PREVIOUS,

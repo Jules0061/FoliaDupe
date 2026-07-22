@@ -45,14 +45,14 @@ public final class DupeBansCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        final List<Material> entries = blacklist.displayableMaterials();
-        if (entries.isEmpty()) {
+        final List<Material> survival = blacklist.displayableMaterials();
+        final List<Material> hidden = blacklist.hiddenMaterials();
+        if (survival.isEmpty() && hidden.isEmpty()) {
             messages.bansEmpty(player);
             return true;
         }
 
-        final int hidden = blacklist.materialCount() - entries.size();
-        new DupeBansMenu(plugin, messages, entries, hidden, blacklist.keywordCount()).open(player);
+        new DupeBansMenu(plugin, messages, survival, hidden, blacklist.keywordCount()).open(player);
         return true;
     }
 

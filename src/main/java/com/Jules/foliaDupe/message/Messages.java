@@ -24,11 +24,17 @@ public record Messages(
         String bansNext,
         String bansInfoName,
         List<String> bansInfoLore,
-        List<String> bansEntryLore) {
+        List<String> bansEntryLore,
+        List<String> bansEntryLoreHidden,
+        String bansToggleName,
+        List<String> bansToggleLore,
+        String bansStateShown,
+        String bansStateHidden) {
 
     static Messages empty() {
         return new Messages("", "", "", "", "", "", "", "", "", "", "", "", "",
-                "Blacklisted Items", "", "", "", "", List.of(), List.of());
+                "Blacklisted Items", "", "", "", "", List.of(), List.of(),
+                List.of(), "", List.of(), "", "");
     }
 
     static Messages from(FileConfiguration config) {
@@ -52,6 +58,11 @@ public record Messages(
                 config.getString("dupebans.next-page", "<yellow>Next Page"),
                 config.getString("dupebans.info-name", "<white>Blacklisted Items"),
                 List.copyOf(config.getStringList("dupebans.info-lore")),
-                List.copyOf(config.getStringList("dupebans.entry-lore")));
+                List.copyOf(config.getStringList("dupebans.entry-lore")),
+                List.copyOf(config.getStringList("dupebans.entry-lore-hidden")),
+                config.getString("dupebans.toggle-name", "<white>Creative-Only Items"),
+                List.copyOf(config.getStringList("dupebans.toggle-lore")),
+                config.getString("dupebans.state-shown", "<green>Shown"),
+                config.getString("dupebans.state-hidden", "<red>Hidden"));
     }
 }
